@@ -720,9 +720,7 @@ public class JSONObject {
             return (String) object;
         }
         // András changed this
-        if (object instanceof Number) {
-        	return object.toString();
-        }
+        if (object!=null) return object.toString();
         throw new JSONException("JSONObject[" + quote(key) + "] not a string.");
     }
 
