@@ -30,11 +30,12 @@ import java.io.Writer;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.math.*;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Enumeration;
-import java.util.LinkedHashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -131,7 +132,8 @@ public class JSONObject {
          *
          * @return The string "null".
          */
-        public String toString() {
+        @Override
+		public String toString() {
             return "null";
         }
     }
@@ -716,6 +718,10 @@ public class JSONObject {
         Object object = this.get(key);
         if (object instanceof String) {
             return (String) object;
+        }
+        // András changed this
+        if (object instanceof Number) {
+        	return object.toString();
         }
         throw new JSONException("JSONObject[" + quote(key) + "] not a string.");
     }
@@ -1579,7 +1585,8 @@ public class JSONObject {
      *         brace)</small> and ending with <code>}</code>&nbsp;<small>(right
      *         brace)</small>.
      */
-    public String toString() {
+    @Override
+	public String toString() {
         try {
             return this.toString(0);
         } catch (Exception e) {
